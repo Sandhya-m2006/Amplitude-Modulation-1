@@ -76,43 +76,32 @@ Compare the original modulating signal with the demodulated signal. PROCEDURE
 
 Program
 ```
-Ac = 5.8;
-Am = 2.32;
-Fc = 32;
-Fm = 16;
-Fs = 32000;
-t = 0:1/Fs:2/Fm;
-e1 = (Ac*sin(2*3.14*Fm*t));
-subplot(4,1,1);
-plot(t,e1);
-xgrid;
-title('Message Signal');
-xlabel('Time');
-ylabel('Amplitude');
+Am=0.3; 
+Fm=15; 
+Ac=0.75; 
+Fc=30; 
+Fs=240; 
+t=0:1/Fs:2/Fm; 
+em = Am*sin(2*3.14*Fm*t); 
+subplot(4,1,1); 
+plot(t,em); 
+title("Message Signal");
+xgrid; 
+ec = Ac*sin(2*3.14*Fc*t); 
+subplot(4,1,2); 
+plot(t,ec); 
+title("Carrier Signal");
+xgrid; 
+eam = (Ac+(Am*sin(2*3.14*Fm*t))).*sin(2*3.14*Fc*t); 
+subplot(4,1,3); 
+plot(t,eam); 
+title("AM Modulated Signal");
+xgrid; 
+demodulated_signal = abs(hilbert(eam)) - Ac; 
+subplot(4,1,4); 
+plot(t, demodulated_signal); 
+title("Demodulated Signal");
 
-e2 = (Ac*sin(2*3.14*Fc*t));
-subplot(4,1,2);
-plot(t,e2);
-xgrid;
-title('Carrier Signal');
-xlabel('Time');
-ylabel('Amplitude');
-
-e3 = (Ac + (Am*sin(2*3.14*Fm*t))).*sin(2*3.14*Fc*t);
-subplot(4,1,3);
-plot(t,e3);
-xgrid;
-title('AM Modulated Signal');
-xlabel('Time');
-ylabel('Amplitude');
-
-demodulated_signal = abs(hilbert(e3)) - Ac;
-subplot(4,1,4);
-plot(t,demodulated_signal);
-xgrid;
-title('Demodulated Signal');
-xlabel('Time');
-ylabel('Amplitude');
 ```
 
 Output Waveform
